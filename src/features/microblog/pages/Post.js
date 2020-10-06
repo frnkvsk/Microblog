@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
+import Blog from './../components/Blog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Post() {
   const classes = useStyles();
   const {id} = useParams();
-
+  console.log(id)
   return (
     <div className={classes.root}>
-      <h1>`Post ${id}`</h1>
+      <Blog />
       
     </div>
   );

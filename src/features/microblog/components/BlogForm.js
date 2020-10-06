@@ -1,6 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addNewPost } from './../microblogPostsSlice';
 import { useHistory } from "react-router-dom";
-// import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, FormHelperText, OutlinedInput, TextField } from '@material-ui/core';
 // import { v4 as uuid } from 'uuid';
@@ -38,22 +39,28 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoForm = ({formTitle}) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const history = useHistory();
+
   const title = useFormInput('');
   const description = useFormInput('');
   const body = useFormInput('');
 
   const handleSubmit = e => {   
     e.preventDefault();
-       
+    if(title.value.length && description.value.length && body.value.length) {
+      const payload = {
+        title: title.value, 
+        description: description.value, 
+        body: body.value
+      }
+      dispatch(addNewPost(payload))
+      history.push('/');
+    } 
   }
 
-  // const handleChange = (e) => {
-  //   setNewTodo(e.target.value);
-  // }
-
   return (
-    <form className={classes.form} onSubmit={handleSubmit} noValidate autoComplete="off">
+    <form className={classes.form} noValidate autoComplete="off">
       <h1>{formTitle}</h1>
       <FormHelperText className={classes.label}>Title:</FormHelperText>      
       <OutlinedInput 
@@ -76,7 +83,7 @@ const TodoForm = ({formTitle}) => {
         {...body}
       />
       <div className={classes.root}>
-        <Button variant="contained" color="primary" >
+        <Button variant="contained" color="primary" onClick={handleSubmit} >
           Save
         </Button>
         <Button onClick={() => history.push('/')} variant="contained" color="default" >
