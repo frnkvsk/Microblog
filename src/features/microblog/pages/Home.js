@@ -72,7 +72,7 @@ export default function Home() {
         Welcome to<b>&nbsp;Microblog</b>, our innovative site for communicating on the information superhighway.
       </div>
       <div className={classes.display}>
-        {console.log('postList.data',postList)}
+        {/* {console.log('postList.data',postList)} */}
         {(postList && postList.status === 'fulfilled' && postList.data.length) && postList.data.map(e => (
           <div className={classes.blog} key={e.id}>
 

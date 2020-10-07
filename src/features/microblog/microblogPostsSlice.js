@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   getPosts,
-  // getPostById,
+  getPostById,
   // postPostVote,
   postPostNew,
-  // putPostUpdate,
-  // deletePost,
+  putPostUpdate,
+  deletePost,
   // getComments,
   // postCommentNew,
   // putCommentUpdate,
@@ -28,13 +28,14 @@ export const getPostsData = createAsyncThunk(
     return response.data;
   }
 );
-// export const addNewPost = createAsyncThunk(
-//   'getPosts',
-//   async (title, description, body) => {
-//     const response = await postPostNew(title, description, body);
-//     return response.data;
-//   }
-// );
+export const getPostDataById = createAsyncThunk(
+  'getPostById',
+  async (id) => {
+    const response = await getPostById(id);
+    return response.data;
+  }
+);
+
 
 export const microblogPostsSlice = createSlice({
   name: 'postList',
@@ -47,7 +48,12 @@ export const microblogPostsSlice = createSlice({
   },
   reducers: {
     addNewPost: (state, action) => {
-      postPostNew(action.payload.title, action.payload.description, action.payload.body);
+      const {title, description, body} = action.payload;
+      postPostNew(title, description, body);
+    },
+    editPost: (state, action) => {
+      const {id, title, description, body} = action.payload;
+      putPostUpdate(id, title, description, body);
     }
   },
   extraReducers: {
@@ -73,33 +79,35 @@ export const microblogPostsSlice = createSlice({
         error: action.payload,
       };
     },
-    // add a new post
-    // [addNewPost.pending]: (state, action) => {
-    //   state.postList = {
-    //     ...data,
-    //     status: 'pending',
-    //     error: {}
-    //   };
-    // },
-    // [addNewPost.fulfilled]: (state, action) => {
-    //   state.postList = {
-    //     ...data,
-    //     status: 'fulfilled',
-    //     error: {}
-    //   };
-    // },
-    // [addNewPost.rejected]: (state, action) => {
-    //   state.postList = {
-    //     ...data,
-    //     status: 'rejected',
-    //     error: action.payload,
-    //   };
-    // },
+    // get post by id
+    [getPostDataById.pending]: (state, action) => {
+      state.postList = {
+        status: 'pending',
+        data: {},
+        error: {}
+      };
+    },
+    [getPostDataById.fulfilled]: (state, action) => {
+      state.postList = {
+        status: 'fulfilled',
+        data: action.payload,
+        error: {}
+      };
+    },
+    [getPostDataById.rejected]: (state, action) => {
+      state.postList = {
+        status: 'rejected',
+        data: {},
+        error: action.payload,
+      };
+    },
+    
   }
 });
 
 export const {
   addNewPost,
+  editPost,
 } = microblogPostsSlice.actions;
 
 export const selectPosts = state => state.postList.postList;

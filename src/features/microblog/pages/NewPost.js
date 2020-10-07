@@ -26,7 +26,7 @@ export default function NewPost() {
 
   return (
     <div className={classes.root}>
-      <BlogForm formTitle={'New Post'}/>
+      <BlogForm data={{}}/>
     </div>
   );
 }

@@ -49,10 +49,7 @@ export default function Navbar() {
           </Button> 
           <Button className={classes.links} component={Link} to={"/new"} >
             Add a new post
-          </Button>  
-          <Button className={classes.links} component={Link} to={"/id"} >
-            Goto ID
-          </Button>  
+          </Button>
         </div>                
       </Toolbar>
     </AppBar>
