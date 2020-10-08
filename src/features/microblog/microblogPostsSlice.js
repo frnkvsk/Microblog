@@ -6,10 +6,10 @@ import {
   postPostNew,
   putPostUpdate,
   deletePost,
-  // getComments,
-  // postCommentNew,
+  getComments,
+  postCommentNew,
   // putCommentUpdate,
-  // deleteComment,
+  deleteComment,
 } from './api/MicroblogApi';
 
 // export const fetchPlayerList = createAsyncThunk(
@@ -35,6 +35,13 @@ export const getPostDataById = createAsyncThunk(
     return response.data;
   }
 );
+export const getCommentsDataById = createAsyncThunk(
+  'getCommentsById',
+  async (id) => {
+    const response = await getComments(id);
+    return response.data;
+  }
+);
 
 
 export const microblogPostsSlice = createSlice({
@@ -54,6 +61,16 @@ export const microblogPostsSlice = createSlice({
     editPost: (state, action) => {
       const {id, title, description, body} = action.payload;
       putPostUpdate(id, title, description, body);
+    },
+    removePost: (state, action) => {
+      deletePost(action.payload.id);
+    },
+    addNewComment: (state, action) => {
+      const {id, comment} = action.payload;
+      postCommentNew(id, comment);
+    },
+    removeComment: (state, action) => {
+      deleteComment(action.payload.id);
     }
   },
   extraReducers: {
@@ -101,6 +118,28 @@ export const microblogPostsSlice = createSlice({
         error: action.payload,
       };
     },
+    // get comments by id
+    [getCommentsDataById.pending]: (state, action) => {
+      state.postList = {
+        status: 'pending',
+        data: {},
+        error: {}
+      };
+    },
+    [getCommentsDataById.fulfilled]: (state, action) => {
+      state.postList = {
+        status: 'fulfilled',
+        data: action.payload,
+        error: {}
+      };
+    },
+    [getCommentsDataById.rejected]: (state, action) => {
+      state.postList = {
+        status: 'rejected',
+        data: {},
+        error: action.payload,
+      };
+    },
     
   }
 });
@@ -108,6 +147,9 @@ export const microblogPostsSlice = createSlice({
 export const {
   addNewPost,
   editPost,
+  removePost,
+  addNewComment,
+  removeComment,
 } = microblogPostsSlice.actions;
 
 export const selectPosts = state => state.postList.postList;

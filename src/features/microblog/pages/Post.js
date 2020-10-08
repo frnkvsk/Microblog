@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getPostDataById, selectPosts } from './../microblogPostsSlice';
+import { useHistory } from "react-router-dom";
 
-import { Button, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import BlogForm from './../components/BlogForm';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { 
+  getPostDataById,
+  removePost, 
+  selectPosts, 
+} from './../microblogPostsSlice';
+import BlogComments from '../components/BlogComments';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Post({post}) {
   const classes = useStyles();
+  const history = useHistory();
   const [state, setState] = useState('display');
   const dispatch = useDispatch();
   const postList = useSelector(selectPosts);
@@ -76,7 +84,8 @@ export default function Post({post}) {
     setState('edit');
   }
   const handleDelete = () => {
-
+    dispatch(removePost({id: id}));
+    history.push('/');
   }
   return (
     <div className={classes.root}>
@@ -96,9 +105,10 @@ export default function Post({post}) {
           <div>{postList.data.body}</div>
           <hr className={classes.hr}/>
           <div className={classes.titleWrapper}>Comments</div>
-          <Button className={classes.button} variant="contained" color="primary" >
+          {/* <Button className={classes.button} variant="contained" color="primary" >
               Add
-          </Button>
+          </Button> */}
+          <BlogComments id={id} />
           </>
       )) : (
         <BlogForm data={postList.data}/>

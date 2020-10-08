@@ -56,13 +56,13 @@ const getComments = async (id) => {
   return await request(`posts/${id}/comments`)
 }
 const postCommentNew = async (id, text) => {
-  return await request(`posts/${id}/comments`, {text: text}, 'post');
+  return await request(`posts/${id}/comments/${id}`, {text: text}, 'post');
 }
 const putCommentUpdate = async (id, text) => {
-  return await request(`posts/${id}/comments`, {text: text}, 'put');
+  return await request(`posts/${id}/comments/${id}`, {text: text}, 'put');
 }
 const deleteComment = async (id) => {
-  return await request(`posts/${id}/comments`, {}, 'delete');
+  return await request(`posts/${id}/comments/${id}`, {}, 'delete');
 }
 
 export {

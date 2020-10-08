@@ -57,18 +57,20 @@ const BlogForm = ({data}) => {
     if(title !== undefined) setTitle(title);
     if(description !== undefined) setDescription(description);
     if(body !== undefined) setBody(body);
-  }, []);
+  }, [data]);
 
   const handleSubmit = e => {   
     e.preventDefault();
-    if(title.value.length && description.value.length && body.value.length) {
+    if(title.length && description.length && body.length) {
       const payload = {
-        title: title.value, 
-        description: description.value, 
-        body: body.value
+        id: id,
+        title: title, 
+        description: description, 
+        body: body
       }
       if(id !== '') {
-        payload[id] = id;
+        console.log('id',id)
+        // payload['id'] = id;
         dispatch(editPost(payload));
       } else {
         dispatch(addNewPost(payload));
