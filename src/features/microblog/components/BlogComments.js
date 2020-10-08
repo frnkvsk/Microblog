@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+// import { 
+//   getCommentsDataById,
+//   addNewComment,
+//   removeComment,
+//   selectPosts,
+//  } from '../microblogPostsSlice';
 import { 
   getCommentsDataById,
   addNewComment,
   removeComment,
-  selectPosts,
- } from '../microblogPostsSlice';
-import { useHistory } from "react-router-dom";
+  selectComments,
+ } from '../microblogCommentsSlice';
+// import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, FormHelperText, OutlinedInput } from '@material-ui/core';
+import { Button, OutlinedInput } from '@material-ui/core';
 // import { v4 as uuid } from 'uuid';
 // import useFormInput from './../hooks/useFormInput';
 
@@ -19,9 +25,8 @@ import { Button, FormHelperText, OutlinedInput } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
+    margin: '0px',
+    // border: '1px solid pink',
   },
   form: {
     display: 'flex',
@@ -34,68 +39,91 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ffffff',
     marginRight: '5px',
   },
-  title: {
-
-  },
-  label: {
-
-  },
   delete: {
     color: 'red',
-    fontSize: '32px',
+    fontSize: '22px',
+    fontWeight: '700',
+    padding: '0 10px 0 5px',
+    cursor: 'pointer',
+  },
+  deleteWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '5px',
+  },
+  button: {
+    width: '60px',
+    marginTop: '10px',
   }
 }));
 
 const BlogComments = ({id}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
-  const postList = useSelector(selectPosts);
+  // const history = useHistory();
+  const commentList = useSelector(selectComments);
   // const [id, setId] = useState('');
   const [comment, setComment] = useState('');
   // const [comments, setComments] = useState([]);
   
-  useEffect(() => {
-    dispatch(getCommentsDataById(id));
-  }, [dispatch, id])
+  // useEffect(() => {
+  //   dispatch(getCommentsDataById(id)); 
+  // }, [dispatch, id]);
 
-  const handleSubmit = e => {   
+  useEffect(() => {
+    
+    dispatch(getCommentsDataById(id)); 
+    // setComments(() => commentList.data);
+    console.log('--useEffect',commentList.status)
+    // eslint-disable-next-line
+  }, [dispatch, id]);
+
+  
+
+  const handleSubmit = async e => {   
     e.preventDefault();
     if(comment.length) {
       const payload = {
         id: id,
         comment: comment, 
       }
-      dispatch(addNewComment(payload));
+      await dispatch(addNewComment(payload));
+      dispatch(getCommentsDataById(id)); 
+      setComment('');
       
-      history.push('/');
     } 
   }
   const handleChange = e => {
     setComment(e.target.value);
   }
-  const handleDelete = id => {
-    dispatch(removeComment({id: id}))
+  const handleDelete = deleteId => {
+    dispatch(removeComment({id: deleteId}));
+    setTimeout(() => {
+      dispatch(getCommentsDataById(id)); 
+    }, 100);
   }
   return (
     <>
-      <div>
-        {console.log('comments',postList.data.comments)}
-        {postList.data.comments && postList.data.comments.map(e => (
-          <div key={e.id}><div className={classes.delete} onClick={() => handleDelete(e.id)}>X</div>{e.text}</div>
-        ))}
+      <div className={classes.root}>
+        {/* {console.log('comments',comments)} */}
+        {/* {console.log('comments',comments)} */}
+        {commentList.data.length ? commentList.data.map(e => (
+          <div key={e.id} className={classes.deleteWrapper}>
+            <div className={classes.delete} onClick={() => handleDelete(e.id)}>x</div>{e.text}</div>
+        )) : ''}
       </div>
-      <form className={classes.form} noValidate autoComplete="off">      
-        <FormHelperText className={classes.label}>Title:</FormHelperText>      
+      <form className={classes.form} noValidate autoComplete="off">     
+              
         <OutlinedInput 
           name="title"
           className={classes.input} 
           placeholder="New Comment"
           variant="outlined" 
-          value={comment}
+          autoFocus
+          value={comment}          
           onChange={handleChange}
         />        
-        <Button variant="contained" color="primary" onClick={handleSubmit} >
+        <Button className={classes.button} variant="contained" color="primary" onClick={handleSubmit} >
             Add
         </Button>      
       </form>

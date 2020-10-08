@@ -6,20 +6,12 @@ import {
   postPostNew,
   putPostUpdate,
   deletePost,
-  getComments,
-  postCommentNew,
+  // getComments,
+  // postCommentNew,
   // putCommentUpdate,
-  deleteComment,
+  // deleteComment,
 } from './api/MicroblogApi';
 
-// export const fetchPlayerList = createAsyncThunk(
-  // 'team/playerListLoading', 
-//   (teamId:string) =>
-//   axios
-//     .get(`https://api.opendota.com/api/teams/${teamId}/players`)
-//     .then(response => response.data)
-//     .catch(error => error),
-// );
 
 export const getPostsData = createAsyncThunk(
   'getPosts',
@@ -35,13 +27,13 @@ export const getPostDataById = createAsyncThunk(
     return response.data;
   }
 );
-export const getCommentsDataById = createAsyncThunk(
-  'getCommentsById',
-  async (id) => {
-    const response = await getComments(id);
-    return response.data;
-  }
-);
+// export const getCommentsDataById = createAsyncThunk(
+//   'getCommentsById',
+//   async (id) => {
+//     const response = await getComments(id);
+//     return response.data;
+//   }
+// );
 
 
 export const microblogPostsSlice = createSlice({
@@ -65,13 +57,13 @@ export const microblogPostsSlice = createSlice({
     removePost: (state, action) => {
       deletePost(action.payload.id);
     },
-    addNewComment: (state, action) => {
-      const {id, comment} = action.payload;
-      postCommentNew(id, comment);
-    },
-    removeComment: (state, action) => {
-      deleteComment(action.payload.id);
-    }
+    // addNewComment: (state, action) => {
+    //   const {id, comment} = action.payload;
+    //   postCommentNew(id, comment);
+    // },
+    // removeComment: (state, action) => {
+    //   deleteComment(action.payload.id);
+    // }
   },
   extraReducers: {
     // get all posts
@@ -119,27 +111,27 @@ export const microblogPostsSlice = createSlice({
       };
     },
     // get comments by id
-    [getCommentsDataById.pending]: (state, action) => {
-      state.postList = {
-        status: 'pending',
-        data: {},
-        error: {}
-      };
-    },
-    [getCommentsDataById.fulfilled]: (state, action) => {
-      state.postList = {
-        status: 'fulfilled',
-        data: action.payload,
-        error: {}
-      };
-    },
-    [getCommentsDataById.rejected]: (state, action) => {
-      state.postList = {
-        status: 'rejected',
-        data: {},
-        error: action.payload,
-      };
-    },
+    // [getCommentsDataById.pending]: (state, action) => {
+    //   state.postList = {
+    //     status: 'pending',
+    //     data: {},
+    //     error: {}
+    //   };
+    // },
+    // [getCommentsDataById.fulfilled]: (state, action) => {
+    //   state.postList = {
+    //     status: 'fulfilled',
+    //     data: action.payload,
+    //     error: {}
+    //   };
+    // },
+    // [getCommentsDataById.rejected]: (state, action) => {
+    //   state.postList = {
+    //     status: 'rejected',
+    //     data: {},
+    //     error: action.payload,
+    //   };
+    // },
     
   }
 });
@@ -148,8 +140,8 @@ export const {
   addNewPost,
   editPost,
   removePost,
-  addNewComment,
-  removeComment,
+  // addNewComment,
+  // removeComment,
 } = microblogPostsSlice.actions;
 
 export const selectPosts = state => state.postList.postList;

@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     fontSize: '32px',
     fontWeight: '500',
-    marginBottom: '20px',
-    border: '1px solid blue', 
+    marginBottom: '0px',
+    // border: '1px solid blue', 
   },
   title: {
     fontSize: '56px',
@@ -89,7 +89,7 @@ export default function Post({post}) {
   }
   return (
     <div className={classes.root}>
-      {console.log('postList',postList)}
+      {/* {console.log('postList',postList)} */}
       {state === 'display' ? (
         postList && postList.data && (
           <>

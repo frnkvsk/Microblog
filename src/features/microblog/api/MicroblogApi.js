@@ -11,7 +11,7 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
       method: verb,
       url: `${BASE_URL}${endpoint}`,
       [verb === "get" ? "params" : "data"]: paramsOrData});
-    console.log('res',res)
+    
     return res;
       // axios sends query string data via the "params" key,
       // and request body data via the "data" key,
