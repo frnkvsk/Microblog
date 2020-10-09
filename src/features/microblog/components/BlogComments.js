@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { 
-//   getCommentsDataById,
-//   addNewComment,
-//   removeComment,
-//   selectPosts,
-//  } from '../microblogPostsSlice';
 import { 
   getCommentsDataById,
   addNewComment,
   removeComment,
   selectComments,
  } from '../microblogCommentsSlice';
-// import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, OutlinedInput } from '@material-ui/core';
-// import { v4 as uuid } from 'uuid';
-// import useFormInput from './../hooks/useFormInput';
-
-// import {
-//   createTodo,
-//   persistDataToLocalStorage,
-// } from './todosSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,25 +46,13 @@ const useStyles = makeStyles((theme) => ({
 const BlogComments = ({id}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const history = useHistory();
   const commentList = useSelector(selectComments);
-  // const [id, setId] = useState('');
   const [comment, setComment] = useState('');
-  // const [comments, setComments] = useState([]);
-  
-  // useEffect(() => {
-  //   dispatch(getCommentsDataById(id)); 
-  // }, [dispatch, id]);
 
-  useEffect(() => {
-    
+  useEffect(() => {    
     dispatch(getCommentsDataById(id)); 
-    // setComments(() => commentList.data);
-    console.log('--useEffect',commentList.status)
     // eslint-disable-next-line
-  }, [dispatch, id]);
-
-  
+  }, [dispatch, id]);  
 
   const handleSubmit = async e => {   
     e.preventDefault();
@@ -89,8 +63,7 @@ const BlogComments = ({id}) => {
       }
       await dispatch(addNewComment(payload));
       dispatch(getCommentsDataById(id)); 
-      setComment('');
-      
+      setComment('');      
     } 
   }
   const handleChange = e => {
@@ -105,15 +78,12 @@ const BlogComments = ({id}) => {
   return (
     <>
       <div className={classes.root}>
-        {/* {console.log('comments',comments)} */}
-        {/* {console.log('comments',comments)} */}
         {commentList.data.length ? commentList.data.map(e => (
           <div key={e.id} className={classes.deleteWrapper}>
             <div className={classes.delete} onClick={() => handleDelete(e.id)}>x</div>{e.text}</div>
         )) : ''}
       </div>
-      <form className={classes.form} noValidate autoComplete="off">     
-              
+      <form className={classes.form} noValidate autoComplete="off">              
         <OutlinedInput 
           name="title"
           className={classes.input} 
@@ -127,8 +97,7 @@ const BlogComments = ({id}) => {
             Add
         </Button>      
       </form>
-    </>
-    
+    </>    
   );
 }
 

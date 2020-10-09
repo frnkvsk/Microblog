@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getPostsData, selectPosts } from './../microblogPostsSlice';
 
 import { makeStyles } from '@material-ui/core';
+import BlogVotes from './../components/BlogVotes';
 // import Blog from './../components/Blog';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +81,7 @@ export default function Home() {
             <a className={classes.link} href={`/${e.id}`}>{e.title}</a>
             <div>{e.description}</div>
             <div>{e.body}</div>
-            <div>{e.votes}</div>
+            <BlogVotes id={e.id}/>
           </div>
         ))}
       </div>

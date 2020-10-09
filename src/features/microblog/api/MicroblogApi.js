@@ -29,7 +29,7 @@ const getPostById = async (id) => {
   return await request(`posts/${id}`);
 }
 const postPostVote = async (id, direction) => {
-  return await request(`posts/${id}/${direction}`, {}, 'post');
+  return await request(`posts/${id}/vote/${direction}`, {}, 'post');
 }
 const postPostNew = async (title, description, body) => {
   const data = {

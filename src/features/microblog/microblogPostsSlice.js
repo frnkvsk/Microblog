@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   getPosts,
   getPostById,
-  // postPostVote,
+  postPostVote,
   postPostNew,
   putPostUpdate,
   deletePost,
@@ -57,13 +57,11 @@ export const microblogPostsSlice = createSlice({
     removePost: (state, action) => {
       deletePost(action.payload.id);
     },
-    // addNewComment: (state, action) => {
-    //   const {id, comment} = action.payload;
-    //   postCommentNew(id, comment);
-    // },
-    // removeComment: (state, action) => {
-    //   deleteComment(action.payload.id);
-    // }
+    vote: (state, action) => {
+      const {id, direction} = action.payload;
+      console.log('microblogPostsSlice',id,direction)
+      postPostVote(id, direction);
+    }
   },
   extraReducers: {
     // get all posts
@@ -140,6 +138,7 @@ export const {
   addNewPost,
   editPost,
   removePost,
+  vote,
   // addNewComment,
   // removeComment,
 } = microblogPostsSlice.actions;
