@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '99.2%',
     margin: '0px',
     backgroundColor: '#eef0f1fb',
     padding: '3px',

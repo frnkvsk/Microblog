@@ -31,31 +31,56 @@ const useStyles = makeStyles((theme) => ({
     // alignItems: 'center',
     // justifyContent: 'center',
     // width: '100%', 
-    border: '1px solid blue',   
+       
+    margin: '15px 0 0 0' ,
+    // border: '1px solid blue',
   },
   title: {
-    display: 'flex',
-    fontSize: '22px',
+    // display: 'flex',
+    fontSize: '32px',
     width: '100%',
-    border: '1px solid orange',
+    paddingRight: '10px',
+    // border: '1px solid orange',
   },
   display: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     flexWrap: 'wrap',
-    marginTop: '30px',
-    padding: '10px',
+    marginTop: '20px',
+    paddingRight: '10px',
+    // padding: '10px',
+    // border: '1px solid pink',
   },
   blog: {
-    width: '45%',
-    margin: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    minWidth: '400px',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '48%'
+    },
+    // width: '48%',
+    height: '120px',
+    margin: '10px 0 10px 0',
+    flexWrap: 'wrap',
     border: '1px solid #e0e0e0',
     
   },
   link: {
    textDecoration: 'none', 
    color: '#2196f3',
+   padding: '7px',
+  },
+  description: {
+    width: '93%',
+    padding: '7px',
+    flexWrap: 'wrap',
+    overflow: 'hidden',
   }
 }));
 
@@ -70,17 +95,14 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <div className={classes.title}>
-        Welcome to<b>&nbsp;Microblog</b>, our innovative site for communicating on the information superhighway.
+        Welcome to <b> Microblog</b>, our innovative site for communicating on the information superhighway.
       </div>
       <div className={classes.display}>
-        {/* {console.log('postList.data',postList)} */}
         {(postList && postList.status === 'fulfilled' && postList.data.length) && postList.data.map(e => (
           <div className={classes.blog} key={e.id}>
-
-            <div>{e.id}</div>
             <a className={classes.link} href={`/${e.id}`}>{e.title}</a>
-            <div>{e.description}</div>
-            <div>{e.body}</div>
+            <div className={classes.description}>{e.description}</div>
+            {/* <div>{e.body}</div> */}
             <BlogVotes id={e.id}/>
           </div>
         ))}

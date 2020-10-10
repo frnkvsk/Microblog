@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Tooltip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import BlogForm from './../components/BlogForm';
@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     // justifyContent: 'center',
     width: '100%', 
     fontSize: '22px',
-    border: '1px solid red', 
+    padding: '7px',
+    border: '1px solid #e0e0e0', 
   },
   display: {
     // display: 'flex',
@@ -61,12 +62,22 @@ const useStyles = makeStyles((theme) => ({
   hr: {
     width: '100%',
     border: '1px solid #9e9e9e',
-    // borderColor: 'black',
-    // fontWeight: 'bold',
   },
   button: {
     width: '80px',
-  }
+  },
+  description: {
+    fontSize: '22px',
+    fontStyle: 'italic',
+    margin: '12px 0 5px 0',
+    
+  },
+  body: {
+    fontSize: '22px',
+
+    margin: '25px 0 5px 0',
+  },
+  
 }));
 
 export default function Post({post}) {
@@ -93,22 +104,23 @@ export default function Post({post}) {
       {state === 'display' ? (
         postList && postList.data && (
           <>
-          <div className={classes.titleWrapper}>
-            <div className={classes.title}>{postList.data.title}</div>
-            <div className={classes.iconWrapper}>
-              <EditIcon className={classes.editIcon} onClick={handleEdit}/>
-              <CloseIcon className={classes.closeIcon} onClick={handleDelete}/>
+            <div className={classes.titleWrapper}>
+              <div className={classes.title}>{postList.data.title}</div>
+              <div className={classes.iconWrapper}>
+                <Tooltip title="Edit Post">
+                  <EditIcon className={classes.editIcon} onClick={handleEdit}/>
+                </Tooltip>
+                <Tooltip title="Delete Post">
+                  <CloseIcon className={classes.closeIcon} onClick={handleDelete}/>
+                </Tooltip>                
+              </div>
             </div>
-          </div>
-        
-          <div>{postList.data.description}</div>
-          <div>{postList.data.body}</div>
-          <hr className={classes.hr}/>
-          <div className={classes.titleWrapper}>Comments</div>
-          {/* <Button className={classes.button} variant="contained" color="primary" >
-              Add
-          </Button> */}
-          <BlogComments id={id} />
+          
+            <div className={classes.description}>{postList.data.description}</div>
+            <div className={classes.body}>{postList.data.body}</div>
+            <hr className={classes.hr}/>
+            <div className={classes.titleWrapper}>Comments</div>
+            <BlogComments id={id} />
           </>
       )) : (
         <BlogForm data={postList.data}/>

@@ -12,14 +12,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flexGrow: 1,
     backgroundColor: '#eef0f1fb',
   },
-  // menuButton: {
-  //   marginRight: theme.spacing(2),
-  // },
   title: {
-    flexGrow: 1,
     color: 'black',
     textDecoration: 'none',
   },
@@ -29,8 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     fontSize: '18px',
-    marginRight: '20px',
+    margin: '0 20px 0 0',
     color: '#2196f3',
+    padding: '0',
   },
 }));
 

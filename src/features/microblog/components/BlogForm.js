@@ -6,14 +6,13 @@ import {
  } from './../microblogPostsSlice';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, FormHelperText, OutlinedInput, TextField } from '@material-ui/core';
-// import { v4 as uuid } from 'uuid';
-// import useFormInput from './../hooks/useFormInput';
-
-// import {
-//   createTodo,
-//   persistDataToLocalStorage,
-// } from './todosSlice';
+import { 
+  Button, 
+  FormHelperText, 
+  OutlinedInput, 
+  TextField,
+  Modal,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,24 +31,34 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ffffff',
     marginRight: '5px',
   },
-  title: {
-
+  modal: {
+    display: 'flex',
+    padding: theme.spacing(1),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  label: {
-
-  }
+  paper: {
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 const BlogForm = ({data}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const rootRef = React.useRef(null);
 
   const [id, setId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('');
-  
+  // const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const {id, title, description, body} = data;
     console.log(id, title, description, body)
@@ -69,7 +78,7 @@ const BlogForm = ({data}) => {
         body: body
       }
       if(id !== '') {
-        console.log('id',id)
+        // console.log('id',id)
         // payload['id'] = id;
         dispatch(editPost(payload));
       } else {
@@ -81,14 +90,51 @@ const BlogForm = ({data}) => {
   }
   const handleChange = e => {
     if(e.target.name === 'title') {
-      setTitle(e.target.value);
+      if(e.target.value.length >= 30) {
+        toggleOpen();
+      } else {
+        setTitle(e.target.value);
+      }            
     } else if(e.target.name === 'description') {
-      setDescription(e.target.value);
+      if(e.target.value.length >= 50) {
+        toggleOpen();
+      } else {
+        setDescription(e.target.value);   
+      }
+         
     } else {
-      setBody(e.target.value)
+      if(e.target.value.length >= 350) {
+        toggleOpen();
+      } else {
+        setBody(e.target.value);      
+      }       
     }
   }
+  
+  const toggleOpen = () => setOpen(!open);
+
   return (
+    <>
+    
+    <Modal
+        disablePortal
+        disableEnforceFocus
+        disableAutoFocus
+        open={open}
+        aria-labelledby="server-modal-title"
+        aria-describedby="server-modal-description"
+        className={classes.modal}
+        container={() => rootRef.current}
+      >
+        <div className={classes.paper}>
+          <h2 id="server-modal-title">Over Character Limit!</h2>
+          <p id="server-modal-description"><div>Limit Title to 30 characters</div> 
+          <div>Description to 50 characters</div> <div>Body to 350</div></p>
+          <Button onClick={toggleOpen} variant="contained" color="default" >
+          OK
+        </Button>
+        </div>
+      </Modal>
     <form className={classes.form} noValidate autoComplete="off">
       
       <FormHelperText className={classes.label}>Title:</FormHelperText>      
@@ -113,7 +159,7 @@ const BlogForm = ({data}) => {
         className={classes.input} 
         variant="outlined" 
         multiline
-        rows={6}
+        rows={3}
         value={body}
         onChange={handleChange}
       />
@@ -126,6 +172,7 @@ const BlogForm = ({data}) => {
         </Button>
       </div>      
     </form>
+    </>
   );
 }
 
