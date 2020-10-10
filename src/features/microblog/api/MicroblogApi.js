@@ -26,6 +26,7 @@ const getPosts = async () => {
   return await request('posts');
 }
 const getPostById = async (id) => {
+  console.log('getPostById',id)
   return await request(`posts/${id}`);
 }
 const postPostVote = async (id, direction) => {

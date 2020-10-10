@@ -4,9 +4,9 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import { 
   getPostsData,
-  selectPosts,
+  selectVotes,
   vote,
- } from '../microblogPostsSlice';
+ } from '../microblogVotesSlice';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,15 +39,19 @@ const useStyles = makeStyles((theme) => ({
 const BlogVotes = ({id}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const postList = useSelector(selectPosts);
+  const votesList = useSelector(selectVotes);
   const [votes, setVotes] = useState(0);
 
   useEffect(() => {
-    if(postList.data && postList.status === 'fulfilled') {
-      setVotes(postList.data.find(e => e.id === id).votes)
+    dispatch(getPostsData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if(votesList && votesList.status === 'fulfilled') {
+      setVotes(votesList.data.find(e => e.id === id).votes)
     } 
     // eslint-disable-next-line   
-  }, [postList.status]);  
+  }, [votesList.status]);  
 
   const handleUpVote = e => {   
     e.preventDefault();

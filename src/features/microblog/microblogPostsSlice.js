@@ -73,6 +73,7 @@ export const microblogPostsSlice = createSlice({
       };
     },
     [getPostsData.fulfilled]: (state, action) => {
+      console.log('microblogPostsSlice',action.payload)
       state.postList = {
         status: 'fulfilled',
         data: action.payload,
