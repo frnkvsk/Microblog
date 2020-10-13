@@ -51,7 +51,6 @@ const BlogComments = ({id}) => {
 
   useEffect(() => {    
     dispatch(getCommentsDataById(id)); 
-    // eslint-disable-next-line
   }, [dispatch, id]);  
 
   const handleSubmit = async e => {   

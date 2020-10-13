@@ -56,12 +56,10 @@ const BlogForm = ({data}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('');
-  // const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const {id, title, description, body} = data;
-    console.log(id, title, description, body)
     if(id !== undefined) setId(id);
     if(title !== undefined) setTitle(title);
     if(description !== undefined) setDescription(description);
@@ -78,13 +76,10 @@ const BlogForm = ({data}) => {
         body: body
       }
       if(id !== '') {
-        // console.log('id',id)
-        // payload['id'] = id;
         dispatch(editPost(payload));
       } else {
         dispatch(addNewPost(payload));
-      }
-      
+      }      
       history.push('/');
     } 
   }
@@ -114,9 +109,8 @@ const BlogForm = ({data}) => {
   const toggleOpen = () => setOpen(!open);
 
   return (
-    <>
-    
-    <Modal
+    <>    
+      <Modal
         disablePortal
         disableEnforceFocus
         disableAutoFocus
@@ -125,7 +119,7 @@ const BlogForm = ({data}) => {
         aria-describedby="server-modal-description"
         className={classes.modal}
         container={() => rootRef.current}
-      >
+        >
         <div className={classes.paper}>
           <h2 id="server-modal-title">Over Character Limit!</h2>
           <p id="server-modal-description"><div>Limit Title to 30 characters</div> 
@@ -135,43 +129,42 @@ const BlogForm = ({data}) => {
         </Button>
         </div>
       </Modal>
-    <form className={classes.form} noValidate autoComplete="off">
-      
-      <FormHelperText className={classes.label}>Title:</FormHelperText>      
-      <OutlinedInput 
-        name="title"
-        className={classes.input} 
-        variant="outlined" 
-        value={title}
-        onChange={handleChange}
-      />
-      <FormHelperText className={classes.label}>Description:</FormHelperText>
-      <OutlinedInput 
-        name="description"
-        className={classes.input} 
-        variant="outlined" 
-        value={description}
-        onChange={handleChange}
-      />
-      <FormHelperText className={classes.label}>Body:</FormHelperText>
-      <TextField
-        name="body"
-        className={classes.input} 
-        variant="outlined" 
-        multiline
-        rows={3}
-        value={body}
-        onChange={handleChange}
-      />
-      <div className={classes.root}>
-        <Button variant="contained" color="primary" onClick={handleSubmit} >
-          Save
-        </Button>
-        <Button onClick={() => history.push('/')} variant="contained" color="default" >
-          Cancel
-        </Button>
-      </div>      
-    </form>
+      <form className={classes.form} noValidate autoComplete="off">      
+        <FormHelperText className={classes.label}>Title:</FormHelperText>      
+        <OutlinedInput 
+          name="title"
+          className={classes.input} 
+          variant="outlined" 
+          value={title}
+          onChange={handleChange}
+        />
+        <FormHelperText className={classes.label}>Description:</FormHelperText>
+        <OutlinedInput 
+          name="description"
+          className={classes.input} 
+          variant="outlined" 
+          value={description}
+          onChange={handleChange}
+        />
+        <FormHelperText className={classes.label}>Body:</FormHelperText>
+        <TextField
+          name="body"
+          className={classes.input} 
+          variant="outlined" 
+          multiline
+          rows={3}
+          value={body}
+          onChange={handleChange}
+        />
+        <div className={classes.root}>
+          <Button variant="contained" color="primary" onClick={handleSubmit} >
+            Save
+          </Button>
+          <Button onClick={() => history.push('/')} variant="contained" color="default" >
+            Cancel
+          </Button>
+        </div>      
+      </form>
     </>
   );
 }

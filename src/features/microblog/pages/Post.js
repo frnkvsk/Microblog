@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-
 import { makeStyles, Tooltip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import BlogForm from './../components/BlogForm';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   getPostDataById,
@@ -20,20 +18,10 @@ const useStyles = makeStyles((theme) => ({
     
     display: 'flex',
     flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'center',
     width: '100%', 
     fontSize: '22px',
     padding: '7px',
     border: '1px solid #e0e0e0', 
-  },
-  display: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // flexWrap: 'wrap',
-    // marginTop: '30px',
   },
   titleWrapper: {
     display: 'flex',
@@ -43,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '32px',
     fontWeight: '500',
     marginBottom: '0px',
-    // border: '1px solid blue', 
   },
   title: {
     fontSize: '56px',
@@ -87,6 +74,8 @@ export default function Post({post}) {
   const dispatch = useDispatch();
   const postList = useSelector(selectPosts);
   const {id} = useParams();
+  const rootRef = React.useRef(null);
+
   useEffect(() => {
     dispatch(getPostDataById(id));
   }, [dispatch, id]);
@@ -94,28 +83,28 @@ export default function Post({post}) {
   const handleEdit = () => {
     setState('edit');
   }
+
   const handleDelete = () => {
     dispatch(removePost({id: id}));
     history.push('/');
   }
+
   return (
     <div className={classes.root}>
-      {/* {console.log('postList',postList)} */}
       {state === 'display' ? (
         postList && postList.data && (
           <>
             <div className={classes.titleWrapper}>
               <div className={classes.title}>{postList.data.title}</div>
-              <div className={classes.iconWrapper}>
-                <Tooltip title="Edit Post">
+              <div className={classes.iconWrapper} >
+                <Tooltip title="Edit Post" ref={() => rootRef.current}>
                   <EditIcon className={classes.editIcon} onClick={handleEdit}/>
                 </Tooltip>
-                <Tooltip title="Delete Post">
+                <Tooltip title="Delete Post" ref={() => rootRef.current}>
                   <CloseIcon className={classes.closeIcon} onClick={handleDelete}/>
                 </Tooltip>                
               </div>
-            </div>
-          
+            </div>          
             <div className={classes.description}>{postList.data.description}</div>
             <div className={classes.body}>{postList.data.body}</div>
             <hr className={classes.hr}/>
@@ -124,9 +113,7 @@ export default function Post({post}) {
           </>
       )) : (
         <BlogForm data={postList.data}/>
-      )}
-     
-      
+      )}      
     </div>
   );
 }
