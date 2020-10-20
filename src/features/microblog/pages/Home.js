@@ -74,8 +74,11 @@ export default function Home() {
       to: pageCurr * 10 + 10,
     })
   }, [pageCurr]);
+  
+  console.log('--HOME')
 
   return (
+    
     <div className={classes.root}>
       <div className={classes.title}>
         Welcome to <b> Microblog</b>, our innovative site for communicating on the information superhighway.

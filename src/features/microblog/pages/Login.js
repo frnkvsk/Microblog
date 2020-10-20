@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import { Container, FormHelperText, Box, Button } from '@material-ui/core';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { useHistory } from "react-router-dom";
-import { login, signup, getUserInfo } from '../api/JoblyApi'
+import { login, signup, getUserInfo } from '../api/MicroblogApi';
 import { useFormInput } from '../hooks/useFormInput';
 import { AuthContext } from '../context/AuthContext';
 
@@ -84,12 +84,16 @@ export default function Login() {
       // verify username and password are correct
       const resp = await login(username.value, password.value);
 
+      console.log('Login resp',resp)
+      
       // if logged in, use resp.token to get user information
-      const userInfo = await getUserInfo(resp.token, username.value);
+      const userInfo = await getUserInfo(resp.data.token, username.value);
+
+      console.log('Login userInfo',userInfo)
 
       auth.setAuthState({
-        userInfo: userInfo.user,
-        token: resp.token,
+        userInfo: userInfo.data.user,
+        token: resp.data.token,
       });
       history.push(`/`);
     } catch (error) {

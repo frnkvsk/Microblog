@@ -12,12 +12,17 @@ const AuthProvider = ({ children }) => {
     userInfo: userInfo,
   });
   const setAuthInfo = ({ token, userInfo }) => {
-    setTokenStorage(token);
-    setUserInfoStorage(userInfo);
-    setAuthState({
-      token,
-      userInfo,      
-    });
+    try {
+      setTokenStorage(token);
+      setUserInfoStorage(userInfo);
+      setAuthState({
+        token,
+        userInfo,      
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    
   }
   return (
     <Provider
@@ -28,8 +33,8 @@ const AuthProvider = ({ children }) => {
         }
       }
       >
-        {children}
-      </Provider>
+      {children}
+    </Provider>
   )
 }
 

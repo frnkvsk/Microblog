@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './features/microblog/components/Navbar'; 
 import Home from './features/microblog/pages/Home';
 import NewPost from './features/microblog/pages/NewPost';
+import Login from './features/microblog/pages/Login';
 import Post from './features/microblog/pages/Post';
+import { 
+  // AuthProvider, 
+  AuthContext,
+} from './features/microblog/context/AuthContext';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,30 +35,35 @@ const useStyles = makeStyles((theme) => ({
       width: '75%'
     },
     border: 'none',
-    // border: '1px solid #eeeeee',
   },
 }));
 function App() {
   const classes = useStyles();
-
+  const auth = useContext(AuthContext);
+  console.log('App auth',auth)
   return (
     <BrowserRouter>
-      <Navbar />
-      <div className={classes.root}>
-        <main className={classes.main}>
-        <Switch>        
-          <Route exact path="/">
-            <Home />        
-          </Route>
-          <Route exact path="/new">
-            <NewPost />        
-          </Route>
-          <Route exact path="/:id">
-            <Post />        
-          </Route>                 
-        </Switch> 
-        </main>        
-      </div>       
+      {/* <AuthProvider> */}
+        <Navbar />
+          <div className={classes.root}>
+            <main className={classes.main}>
+            <Switch>        
+              <Route exact path="/">
+                <Home />        
+              </Route>
+              <Route exact path="/login">
+                <Login />        
+              </Route>
+              <Route exact path="/new">
+                <NewPost />        
+              </Route>
+              <Route exact path="/:id">
+                <Post />        
+              </Route>                 
+            </Switch> 
+            </main>        
+          </div>
+      {/* </AuthProvider>              */}
     </BrowserRouter>
   );
 }

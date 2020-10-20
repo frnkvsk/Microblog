@@ -41,7 +41,7 @@ const BlogVotes = ({id}) => {
   const dispatch = useDispatch();
   const votesList = useSelector(selectVotes);
   const [votes, setVotes] = useState(0);
-
+  
   useEffect(() => {
     dispatch(getPostsData());
   }, [dispatch]);
