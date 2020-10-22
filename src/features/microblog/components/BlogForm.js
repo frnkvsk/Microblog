@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +13,7 @@ import {
   addNewPost,
   editPost,
  } from './../microblogPostsSlice';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BlogForm = ({data, auth}) => {
-  console.log('BlogForm auth',auth)
+const BlogForm = ({data}) => {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
   const dispatch = useDispatch();
   const history = useHistory();
   const rootRef = React.useRef(null);

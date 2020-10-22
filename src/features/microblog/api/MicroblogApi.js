@@ -25,19 +25,19 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
 // posts
 const getPosts = async () => {
   let res = await request('posts');
-  console.log('MicroblogApi getPosts',res)
+  // console.log('MicroblogApi getPosts',res)
   return res;
 }
 const getPostById = async (id) => {
-  console.log('MicroblogApi getPostById',id)
+  // console.log('MicroblogApi getPostById',id)
   return await request(`posts/${id}`);
 }
 const postPostVote = async (id, direction, token) => {
-  console.log('MicroblogApi postPostVote',id,token)
-  return await request(`posts/vote/${direction}`, {_token: token}, 'post');
+  // console.log('MicroblogApi postPostVote',id,token)
+  return await request(`posts/${id}/vote/${direction}`, {_token: token}, 'post');
 }
 const postPostNew = async (title, description, body, token) => {
-  console.log('MicroblogApi postPostNew',title, token)
+  // console.log('MicroblogApi postPostNew',title, token)
   const data = {
     title: title,
     description: description,
@@ -47,7 +47,7 @@ const postPostNew = async (title, description, body, token) => {
   return await request('posts/', data, 'post');
 }
 const putPostUpdate = async (id, title, description, body) => {
-  console.log('MicroblogApi putPostUpdate',title)
+  // console.log('MicroblogApi putPostUpdate',title)
   const data = {
     title: title,
     description: description,
@@ -56,7 +56,7 @@ const putPostUpdate = async (id, title, description, body) => {
   return await request(`posts/${id}`, data, 'put');
 }
 const deletePost = async (id) => {
-  console.log('MicroblogApi deletePost',id)
+  // console.log('MicroblogApi deletePost',id)
   return await request(`posts/${id}`, {}, 'delete');
 }
 
@@ -66,25 +66,25 @@ const getComments = async (id) => {
   return await request(`posts/comments/${id}`)
 }
 const postCommentNew = async (id, text, token) => {
-  console.log('MicroblogApi postCommentNew',id,token)
+  // console.log('MicroblogApi postCommentNew',id,token)
   const res = await request(`posts/comments/${id}`, {text: text, _token: token}, 'post');
 
   console.log('------------------res')
   return res
 }
 const putCommentUpdate = async (id, text, token) => {
-  console.log('MicroblogApi putCommentUpdate',id)
+  // console.log('MicroblogApi putCommentUpdate',id)
   const res = await request(`posts/comments/${id}`, {text: text, _token: token}, 'put');
   return res
 }
-const deleteComment = async (id, token) => {
-  console.log('MicroblogApi deleteComment',id)
-  return await request(`posts/comments/${id}`, {_token: token}, 'delete');
+const deleteComment = async (id, username, token) => {
+  console.log('MicroblogApi deleteComment',id, username, token)
+  return await request(`posts/comments/${id}`, {username: username, _token: token}, 'delete');
 }
 
 // login / signup
 const login = async (username, password) => {
-  console.log('MicroblogApi login',username, password)
+  // console.log('MicroblogApi login',username, password)
   try {
     return await request('login/', {username: username, password: password}, 'post');
   } catch (error) {
@@ -92,7 +92,7 @@ const login = async (username, password) => {
   }   
 }
 const signup = async (username, password, first_name, last_name, photo_url, email) => {
-  console.log('MicroblogApi signup',username)
+  // console.log('MicroblogApi signup',username)
   try {
     return await request('users/', {
       username: username, 
@@ -106,7 +106,7 @@ const signup = async (username, password, first_name, last_name, photo_url, emai
   }   
 }
 const getUserInfo = async (token, username) => {
-  console.log('MicroblogApi getUserInfo',username)
+  // console.log('MicroblogApi getUserInfo',username)
   try {
     return await request(`users/${username}/`, {_token: token});
   } catch (error) {
@@ -114,7 +114,7 @@ const getUserInfo = async (token, username) => {
   }   
 }
 const patchUserInfo = async (token, username, userInfo) => {
-  console.log('MicroblogApi patchUserInfo',username)
+  // console.log('MicroblogApi patchUserInfo',username)
   userInfo._token = token;
   try {
     return await request(`users/${username}/`, userInfo, 'patch');

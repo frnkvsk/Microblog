@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,6 +12,7 @@ import {
 } from './../microblogPostsSlice';
 import BlogForm from './../components/BlogForm';
 import BlogComments from '../components/BlogComments';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,8 +68,9 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function Post({post, auth}) {
+export default function Post({post}) {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const [state, setState] = useState('display');
   const dispatch = useDispatch();
@@ -110,10 +111,10 @@ export default function Post({post, auth}) {
             <div className={classes.body}>{postList.data.body}</div>
             <hr className={classes.hr}/>
             <div className={classes.titleWrapper}>Comments</div>
-            <BlogComments id={id} auth={auth}/>
+            <BlogComments id={id}/>
           </>
       )) : (
-        <BlogForm data={postList.data} auth={auth}/>
+        <BlogForm data={postList.data}/>
       )}      
     </div>
   );

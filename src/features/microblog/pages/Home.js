@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { AuthContext } from '../context/AuthContext';
 import { getPostsData, selectPosts } from './../microblogPostsSlice';
 import { makeStyles } from '@material-ui/core';
 import BlogVotes from './../components/BlogVotes';
@@ -54,8 +55,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Home({auth}) {
+export default function Home() {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
   const dispatch = useDispatch();
   const postList = useSelector(selectPosts);
   const { pageCurr } = useSelector(selectPageCount);
@@ -75,7 +77,6 @@ export default function Home({auth}) {
     })
   }, [pageCurr]);
   
-  console.log('--HOME')
 
   return (
     

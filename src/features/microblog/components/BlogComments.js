@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   getCommentsDataById,
@@ -8,6 +8,7 @@ import {
  } from '../microblogCommentsSlice';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, OutlinedInput } from '@material-ui/core';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BlogComments = ({id, auth}) => {
+const BlogComments = ({id}) => {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
   const dispatch = useDispatch();
   const commentList = useSelector(selectComments);
   const [comment, setComment] = useState('');

@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './features/microblog/components/Navbar'; 
 import Home from './features/microblog/pages/Home';
 import NewPost from './features/microblog/pages/NewPost';
 import Login from './features/microblog/pages/Login';
 import Post from './features/microblog/pages/Post';
-import { 
-  // AuthProvider, 
-  AuthContext,
-} from './features/microblog/context/AuthContext';
+// import { 
+//   AuthProvider, 
+//   AuthContext,
+// } from './features/microblog/context/AuthContext';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,31 +39,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 function App() {
   const classes = useStyles();
-  const auth = useContext(AuthContext);
-  console.log('App auth',auth)
+
   return (
     <BrowserRouter>
-      {/* <AuthProvider> */}
-        <Navbar auth={auth}/>
+        <Navbar/>
           <div className={classes.root}>
             <main className={classes.main}>
             <Switch>        
               <Route exact path="/">
-                <Home auth={auth}/>        
+                <Home />        
               </Route>
               <Route exact path="/login">
-                <Login auth={auth}/>        
+                <Login/>        
               </Route>
               <Route exact path="/new">
-                <NewPost auth={auth}/>        
+                <NewPost/>        
               </Route>
               <Route exact path="/:id">
-                <Post auth={auth}/>        
+                <Post/>        
               </Route>                 
             </Switch> 
             </main>        
-          </div>
-      {/* </AuthProvider>              */}
+          </div>        
     </BrowserRouter>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -8,6 +8,7 @@ import {
   vote,
  } from '../microblogVotesSlice';
 import { makeStyles } from '@material-ui/core/styles';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +37,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BlogVotes = ({id, auth}) => {
+const BlogVotes = ({id}) => {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
   const dispatch = useDispatch();
   const votesList = useSelector(selectVotes);
   const [votes, setVotes] = useState(0);
@@ -64,6 +66,7 @@ const BlogVotes = ({id, auth}) => {
   }
   const handleDownVote = e => {
     e.preventDefault();
+    console.log('--BlogVotes handleDownVote',auth) 
     dispatch(vote({id: id, direction: 'down', token: auth.authState.token}));
     setTimeout(() => {
       dispatch(getPostsData());
