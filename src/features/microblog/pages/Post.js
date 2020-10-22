@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import { makeStyles, Tooltip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
-import BlogForm from './../components/BlogForm';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   getPostDataById,
   removePost, 
   selectPosts, 
 } from './../microblogPostsSlice';
+import BlogForm from './../components/BlogForm';
 import BlogComments from '../components/BlogComments';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function Post({post}) {
+export default function Post({post, auth}) {
   const classes = useStyles();
   const history = useHistory();
   const [state, setState] = useState('display');
@@ -85,7 +86,7 @@ export default function Post({post}) {
   }
 
   const handleDelete = () => {
-    dispatch(removePost({id: id}));
+    dispatch(removePost({id: id, token: auth.authState.token}));
     history.push('/');
   }
 
@@ -109,10 +110,10 @@ export default function Post({post}) {
             <div className={classes.body}>{postList.data.body}</div>
             <hr className={classes.hr}/>
             <div className={classes.titleWrapper}>Comments</div>
-            <BlogComments id={id} />
+            <BlogComments id={id} auth={auth}/>
           </>
       )) : (
-        <BlogForm data={postList.data}/>
+        <BlogForm data={postList.data} auth={auth}/>
       )}      
     </div>
   );

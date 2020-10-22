@@ -25,8 +25,8 @@ export const microblogVotesSlice = createSlice({
   reducers: {
     vote: (state, action) => {
       console.log('-----voting',action.payload)
-      const {id, direction} = action.payload;
-      postPostVote(id, direction);
+      const {id, direction, token} = action.payload;
+      postPostVote(id, direction, token);
     }
   },
   extraReducers: {

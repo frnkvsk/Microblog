@@ -24,11 +24,12 @@ export const microblogCommentsSlice = createSlice({
   },
   reducers: {
     addNewComment: (state, action) => {
-      const {id, comment} = action.payload;
-      postCommentNew(id, comment);
+      const {id, comment, token} = action.payload;
+      postCommentNew(id, comment, token);
     },
     removeComment: (state, action) => {
-      deleteComment(action.payload.id);
+      const {id, username, token} = action.payload;
+      deleteComment(id, username, token);
     },    
   },
   extraReducers: {    

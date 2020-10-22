@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Home() {
+export default function Home({auth}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const postList = useSelector(selectPosts);
@@ -88,7 +88,7 @@ export default function Home() {
           <div className={classes.blog} key={e.id}>
             <a className={classes.link} href={`/${e.id}`}>{e.title}</a>
             <div className={classes.description}>{e.description}</div>
-            <BlogVotes id={e.id}/>
+            <BlogVotes id={e.id} auth={auth}/>
           </div>
         ))}
       </div>

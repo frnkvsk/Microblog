@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { AuthContext } from '../context/AuthContext';
+// import { AuthContext } from '../context/AuthContext';
 import UserAvatar from './UserAvatar';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({auth}) {
   const classes = useStyles();
-  const auth = useContext(AuthContext);
+  // const auth = useContext(AuthContext);
+  console.log('Navbar auth',auth)
+  console.log('Navbar auth.authState.token',auth.authState.token)
   const handleClick = () => {
     auth.setAuthState({
       token: "",

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { 
-  addNewPost,
-  editPost,
- } from './../microblogPostsSlice';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -13,6 +9,10 @@ import {
   TextField,
   Modal,
 } from '@material-ui/core';
+import { 
+  addNewPost,
+  editPost,
+ } from './../microblogPostsSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BlogForm = ({data}) => {
+const BlogForm = ({data, auth}) => {
+  console.log('BlogForm auth',auth)
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -57,6 +58,12 @@ const BlogForm = ({data}) => {
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('');
   const [open, setOpen] = useState(false);
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    console.log('setting token')
+    setToken(auth.authState.token);
+  }, [auth]);
+   
 
   useEffect(() => {
     const {id, title, description, body} = data;
@@ -73,7 +80,8 @@ const BlogForm = ({data}) => {
         id: id,
         title: title, 
         description: description, 
-        body: body
+        body: body,
+        token: token
       }
       if(id !== '') {
         dispatch(editPost(payload));

@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewPost() {
+export default function NewPost({auth}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <BlogForm data={{}}/>
+      <BlogForm data={{}} auth={auth}/>
     </div>
   );
 }

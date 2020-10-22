@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BlogComments = ({id}) => {
+const BlogComments = ({id, auth}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const commentList = useSelector(selectComments);
@@ -59,21 +59,29 @@ const BlogComments = ({id}) => {
       const payload = {
         id: id,
         comment: comment, 
+        token: auth.authState.token
       }
       await dispatch(addNewComment(payload));
       dispatch(getCommentsDataById(id)); 
       setComment('');      
     } 
   }
-  const handleChange = e => {
-    setComment(e.target.value);
-  }
+  
   const handleDelete = deleteId => {
-    dispatch(removeComment({id: deleteId}));
+    dispatch(removeComment({
+      id: deleteId, 
+      username: auth.authState.userInfo.username,
+      token: auth.authState.token
+    }));
     setTimeout(() => {
       dispatch(getCommentsDataById(id)); 
     }, 100);
   }
+
+  const handleChange = e => {
+    setComment(e.target.value);
+  }
+
   return (
     <>
       <div className={classes.root}>

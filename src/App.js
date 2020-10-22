@@ -44,21 +44,21 @@ function App() {
   return (
     <BrowserRouter>
       {/* <AuthProvider> */}
-        <Navbar />
+        <Navbar auth={auth}/>
           <div className={classes.root}>
             <main className={classes.main}>
             <Switch>        
               <Route exact path="/">
-                <Home />        
+                <Home auth={auth}/>        
               </Route>
               <Route exact path="/login">
-                <Login />        
+                <Login auth={auth}/>        
               </Route>
               <Route exact path="/new">
-                <NewPost />        
+                <NewPost auth={auth}/>        
               </Route>
               <Route exact path="/:id">
-                <Post />        
+                <Post auth={auth}/>        
               </Route>                 
             </Switch> 
             </main>        

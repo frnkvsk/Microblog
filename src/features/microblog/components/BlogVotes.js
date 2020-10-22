@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BlogVotes = ({id}) => {
+const BlogVotes = ({id, auth}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const votesList = useSelector(selectVotes);
@@ -53,16 +53,18 @@ const BlogVotes = ({id}) => {
     // eslint-disable-next-line   
   }, [votesList.status]);  
 
-  const handleUpVote = e => {   
+  const handleUpVote = e => { 
+     
     e.preventDefault();
-    dispatch(vote({id: id, direction: 'up'}));
+    console.log('--BlogVotes handleUpVote',auth) 
+    dispatch(vote({id: id, direction: 'up', token: auth.authState.token}));
     setTimeout(() => {
       dispatch(getPostsData());
     }, 100);
   }
   const handleDownVote = e => {
     e.preventDefault();
-    dispatch(vote({id: id, direction: 'down'}));
+    dispatch(vote({id: id, direction: 'down', token: auth.authState.token}));
     setTimeout(() => {
       dispatch(getPostsData());
     }, 100);

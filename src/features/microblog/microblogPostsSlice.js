@@ -34,8 +34,8 @@ export const microblogPostsSlice = createSlice({
   },
   reducers: {
     addNewPost: (state, action) => {
-      const {title, description, body} = action.payload;
-      postPostNew(title, description, body);
+      const {title, description, body, token} = action.payload;
+      postPostNew(title, description, body, token);
     },
     editPost: (state, action) => {
       const {id, title, description, body} = action.payload;
@@ -97,7 +97,7 @@ export const {
   addNewPost,
   editPost,
   removePost,
-  vote,
+  // vote,
 } = microblogPostsSlice.actions;
 
 export const selectPosts = state => state.postList.postList;
