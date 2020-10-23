@@ -106,10 +106,10 @@ const getUserInfo = async (token, username) => {
     console.error(error);
   }   
 }
-const patchUserInfo = async (token, username, userInfo) => {
+const patchUserInfo = async (token, userInfo) => {
   userInfo._token = token;
   try {
-    return await request(`users/${username}/`, userInfo, 'patch');
+    return await request(`users/${userInfo.username}/`, userInfo, 'patch');
   } catch (error) {
     console.error(error);
   }   

@@ -5,7 +5,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Button, Box } from '@material-ui/core';
 import { AuthContext } from '../context/AuthContext';
 import { useFormInput } from '../hooks/useFormInput';
-import { patchUserInfo } from '../api/JoblyApi';
+import { patchUserInfo } from '../api/MicroblogApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,27 +58,26 @@ export default function Profile() {
   const photo_url = useFormInput(user.photo_url);  
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+
   const handleClick = async () => {
     try {
       const userInfo = {
-        jobs: auth.authState.userInfo.jobs,
         username: username.value,
         first_name: first_name.value,
         last_name: last_name.value,        
         email: email.value,
-        photo_url: photo_url.value,
+        photo_url: photo_url.value || first_name.value,
       }
+      console.log('userInfo',userInfo)
       // set context state and save it to localstorage
       auth.setAuthState({
         token: auth.authState.token,
         userInfo: userInfo,
       });
       // persist data to the database
-      delete userInfo.username;
-      delete userInfo.jobs;
       userInfo.password = password.value;
       if(Object.values(userInfo).every(e => e.length)) {
-        await patchUserInfo(auth.authState.token, username.value,userInfo);
+        await patchUserInfo(auth.authState.token, userInfo);
         setErrorMessage(false);
         setSuccessMessage(true);
       } else {

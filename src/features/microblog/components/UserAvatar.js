@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.getContrastText(deepOrange[500]),
       backgroundColor: deepOrange[500],
     },
+    marginRight: '40px',
   },
 }));
 

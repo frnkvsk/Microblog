@@ -5,11 +5,8 @@ import Home from './features/microblog/pages/Home';
 import NewPost from './features/microblog/pages/NewPost';
 import Login from './features/microblog/pages/Login';
 import Post from './features/microblog/pages/Post';
-// import { 
-//   AuthProvider, 
-//   AuthContext,
-// } from './features/microblog/context/AuthContext';
 import { makeStyles } from '@material-ui/core';
+import Profile from './features/microblog/pages/Profile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,9 +52,13 @@ function App() {
               <Route exact path="/new">
                 <NewPost/>        
               </Route>
+              <Route exact path="/profile">
+                <Profile/>        
+              </Route>
               <Route exact path="/:id">
                 <Post/>        
               </Route>                 
+                               
             </Switch> 
             </main>        
           </div>        

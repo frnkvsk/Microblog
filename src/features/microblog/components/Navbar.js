@@ -11,9 +11,15 @@ import UserAvatar from './UserAvatar';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    flexDirection: 'column',    
+    [theme.breakpoints.down('sm')]: {
+      alignItems: 'center',
+      justifyContent: 'center',      
+    },
+    [theme.breakpoints.up('md')]: {
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+    },
     backgroundColor: '#eef0f1fb',
   },
   title: {
@@ -23,10 +29,18 @@ const useStyles = makeStyles((theme) => ({
   linkWrapper: {
     display: 'flex',
     fontWeight: 'bold',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+    },
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+    },
   },
   links: {
     fontSize: '18px',
-    margin: '0 20px 0 0',
+    margin: '0 40px 0 0',
     color: '#2196f3',
     padding: '0',
   },
@@ -59,9 +73,12 @@ export default function Navbar() {
             <Button className={classes.links} component={Link} to={"/new"} >
               Add a new post
             </Button>
+            <Button className={classes.links} component={Link} to={"/profile"} >
+              Profile
+            </Button>
             <Button onClick={handleClick} className={classes.links} component={Link} to={"/login"} >
               Log out
-            </Button>
+            </Button>            
             </> :
             <Button className={classes.links} component={Link} to={"/login"} >
               Login / Signup
