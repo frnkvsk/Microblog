@@ -9,6 +9,7 @@ import {
   getPostDataById,
   removePost, 
   selectPosts, 
+  getPostsData,
 } from './../microblogPostsSlice';
 import BlogForm from './../components/BlogForm';
 import BlogComments from '../components/BlogComments';
@@ -90,7 +91,11 @@ export default function Post() {
     dispatch(removePost({
       id: id, 
       username: auth.authState.userInfo.username,
-      token: auth.authState.token}));
+      token: auth.authState.token
+    }));
+    setTimeout(() => {
+      dispatch(getPostsData());
+    }, 100);
     history.push('/');
   }
 

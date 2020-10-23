@@ -59,7 +59,6 @@ const BlogVotes = ({id}) => {
   const handleUpVote = e => { 
      
     e.preventDefault();
-    console.log('--BlogVotes handleUpVote',auth) 
     dispatch(vote({id: id, direction: 'up', token: auth.authState.token}));
     setTimeout(() => {
       dispatch(getPostsData());
@@ -67,7 +66,6 @@ const BlogVotes = ({id}) => {
   }
   const handleDownVote = e => {
     e.preventDefault();
-    console.log('--BlogVotes handleDownVote',auth) 
     dispatch(vote({id: id, direction: 'down', token: auth.authState.token}));
     setTimeout(() => {
       dispatch(getPostsData());

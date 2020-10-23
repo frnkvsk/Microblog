@@ -61,7 +61,6 @@ const BlogForm = ({data}) => {
   const [open, setOpen] = useState(false);
   const [token, setToken] = useState('');
   useEffect(() => {
-    console.log('setting token')
     setToken(auth.authState.token);
   }, [auth]);
    
@@ -77,7 +76,6 @@ const BlogForm = ({data}) => {
   const handleSubmit = e => {   
     e.preventDefault();
     if(title.length && description.length && body.length) {
-      console.log('BlogForm handleSubmit',auth.authState.userInfo.username)
       const payload = {
         id: id,
         title: title, 

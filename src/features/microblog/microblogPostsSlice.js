@@ -19,7 +19,6 @@ export const getPostDataById = createAsyncThunk(
   'getPostById',
   async (id) => {
     const response = await getPostById(id);
-    console.log('-microblogPostsSlice',response.data,'  |||', id)
     return response.data;
   }
 );
