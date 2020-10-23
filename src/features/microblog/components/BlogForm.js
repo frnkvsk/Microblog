@@ -77,11 +77,13 @@ const BlogForm = ({data}) => {
   const handleSubmit = e => {   
     e.preventDefault();
     if(title.length && description.length && body.length) {
+      console.log('BlogForm handleSubmit',auth.authState.userInfo.username)
       const payload = {
         id: id,
         title: title, 
         description: description, 
         body: body,
+        username: auth.authState.userInfo.username,
         token: token
       }
       if(id !== '') {

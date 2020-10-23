@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function Post({post}) {
+export default function Post() {
   const classes = useStyles();
   const auth = useContext(AuthContext);
   const history = useHistory();
@@ -87,7 +87,10 @@ export default function Post({post}) {
   }
 
   const handleDelete = () => {
-    dispatch(removePost({id: id, token: auth.authState.token}));
+    dispatch(removePost({
+      id: id, 
+      username: auth.authState.userInfo.username,
+      token: auth.authState.token}));
     history.push('/');
   }
 
@@ -99,12 +102,17 @@ export default function Post({post}) {
             <div className={classes.titleWrapper}>
               <div className={classes.title}>{postList.data.title}</div>
               <div className={classes.iconWrapper} >
-                <Tooltip title="Edit Post" ref={() => rootRef.current}>
-                  <EditIcon className={classes.editIcon} onClick={handleEdit}/>
-                </Tooltip>
-                <Tooltip title="Delete Post" ref={() => rootRef.current}>
-                  <CloseIcon className={classes.closeIcon} onClick={handleDelete}/>
-                </Tooltip>                
+                {postList.data.username === auth.authState.userInfo.username &&
+                  <>
+                  <Tooltip title="Edit Post" ref={() => rootRef.current}>
+                    <EditIcon className={classes.editIcon} onClick={handleEdit}/>
+                  </Tooltip>
+                  <Tooltip title="Delete Post" ref={() => rootRef.current}>
+                    <CloseIcon className={classes.closeIcon} onClick={handleDelete}/>
+                  </Tooltip> 
+                  </> 
+                }
+                                
               </div>
             </div>          
             <div className={classes.description}>{postList.data.description}</div>

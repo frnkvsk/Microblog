@@ -21,9 +21,9 @@ const AuthProvider = ({ children }) => {
       });
     } catch (error) {
       console.error(error);
-    }
-    
+    }    
   }
+  
   return (
     <Provider
       value={

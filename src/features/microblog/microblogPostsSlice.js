@@ -19,6 +19,7 @@ export const getPostDataById = createAsyncThunk(
   'getPostById',
   async (id) => {
     const response = await getPostById(id);
+    console.log('-microblogPostsSlice',response.data,'  |||', id)
     return response.data;
   }
 );
@@ -38,11 +39,11 @@ export const microblogPostsSlice = createSlice({
       postPostNew(title, description, body, token);
     },
     editPost: (state, action) => {
-      const {id, title, description, body} = action.payload;
-      putPostUpdate(id, title, description, body);
+      const {id, title, description, body, username, token} = action.payload;
+      putPostUpdate(id, title, description, body, username,token);
     },
     removePost: (state, action) => {
-      deletePost(action.payload.id);
+      deletePost(action.payload.id, action.payload.username, action.payload.token);
     },
   },
   extraReducers: {
@@ -97,7 +98,6 @@ export const {
   addNewPost,
   editPost,
   removePost,
-  // vote,
 } = microblogPostsSlice.actions;
 
 export const selectPosts = state => state.postList.postList;

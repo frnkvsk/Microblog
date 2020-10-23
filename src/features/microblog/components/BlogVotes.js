@@ -50,7 +50,8 @@ const BlogVotes = ({id}) => {
 
   useEffect(() => {
     if(votesList && votesList.status === 'fulfilled') {
-      setVotes(votesList.data.find(e => e.id === id).votes)
+      const votesCount = votesList.data.find(e => e.id === id);
+      setVotes(() => votesCount ? votesCount.votes : 0);
     } 
     // eslint-disable-next-line   
   }, [votesList.status]);  

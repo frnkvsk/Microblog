@@ -83,13 +83,9 @@ export default function Login() {
     try {
       // verify username and password are correct
       const resp = await login(username.value, password.value);
-
-      console.log('Login resp',resp)
       
       // if logged in, use resp.token to get user information
       const userInfo = await getUserInfo(resp.data.token, username.value);
-
-      console.log('Login userInfo',userInfo)
 
       auth.setAuthState({
         userInfo: userInfo.data.user,
@@ -111,7 +107,7 @@ export default function Login() {
           photo_url.value, 
           email.value);
       auth.setAuthState({
-        token: resp.token,
+        token: resp.data.token,
         userInfo: {
           username: username.value,
           first_name: first_name.value,

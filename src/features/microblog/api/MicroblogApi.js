@@ -46,18 +46,26 @@ const postPostNew = async (title, description, body, token) => {
   }
   return await request('posts/', data, 'post');
 }
-const putPostUpdate = async (id, title, description, body) => {
-  // console.log('MicroblogApi putPostUpdate',title)
+const putPostUpdate = async (id, title, description, body, username, token) => {
+  
   const data = {
     title: title,
     description: description,
-    body: body,    
+    body: body,  
+    username: username,
+    _token: token  
   }
+  console.log('MicroblogApi putPostUpdate',data)
   return await request(`posts/${id}`, data, 'put');
 }
-const deletePost = async (id) => {
-  // console.log('MicroblogApi deletePost',id)
-  return await request(`posts/${id}`, {}, 'delete');
+const deletePost = async (id, username, token) => {
+  const data = {
+    id: id,
+    username: username,
+    _token: token  
+  }
+  console.log('MicroblogApi deletePost',data)
+  return await request(`posts/${id}`, data, 'delete');
 }
 
 // comments
