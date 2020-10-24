@@ -26,9 +26,3 @@ test('renders Login ', async() => {
   expect(screen.getByRole('button', {name: /submit/i})).toBeInTheDocument();
 });
 
-
-// snapshot test
-// test('matches snapshot', () => {
-//   const { asFragment } = render(<Login />);
-//   expect(asFragment()).toMatchSnapshot();
-// });
